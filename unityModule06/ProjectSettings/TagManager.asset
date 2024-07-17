@@ -6,6 +6,7 @@ TagManager:
   tags:
   - wall
   - door
+  - lastDoor
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - wall
   - ground
   - door
-  - 
-  - 
+  - key
+  - ending
   - 
   - 
   - 

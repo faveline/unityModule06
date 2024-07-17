@@ -12,9 +12,13 @@ public class player : MonoBehaviour
 	private GameObject	door;
 	private bool		doorToOpen;
 	private GameObject	cpy;
+	private bool		keyBool;
+	private GameObject	key;
+	private int			nbrKey;
 
     void Start()
     {
+		nbrKey = 0;
 		cpy = null;
 		doorToOpen = true;
 		timeLast = 0f;
@@ -38,8 +42,18 @@ public class player : MonoBehaviour
 		if (Input.GetKey(KeyCode.D)) {
 			transform.rotation = Quaternion.Euler(transform.eulerAngles + rota * Time.deltaTime);	
 		}
-		if (Input.GetKeyDown(KeyCode.F) && doorBool) {
-			door.GetComponent<Animator>().SetTrigger("openDoor");
+		if (Input.GetKeyDown(KeyCode.F)) {
+			if (doorBool) {
+				Debug.Log(nbrKey);
+				if (door.gameObject.tag != "lastDoor" || nbrKey == 3)
+					door.GetComponent<Animator>().SetTrigger("openDoor");
+			}
+			if (keyBool) {
+				nbrKey++;
+				keyBool = false;	
+				Destroy(key.gameObject);
+				key = null;
+			}
 		}
     }
 
@@ -48,12 +62,23 @@ public class player : MonoBehaviour
 			doorBool = true;
 			door = other.transform.parent.gameObject;
 		}
+		if (other.gameObject.layer == 9) {
+			keyBool = true;
+			key = other.gameObject;
+		}
+		if (other.gameObject.layer == 10) {
+			GameManager.Instance.gameOver(1);
+		}
 	}
 
 	private void OnTriggerExit(Collider other) {
 		if (other.gameObject.layer == 8) {
 			doorBool = false;
 			door = null;
+		}
+		if (other.gameObject.layer == 9) {
+			keyBool = false;
+			key = null;
 		}
 	}
 }

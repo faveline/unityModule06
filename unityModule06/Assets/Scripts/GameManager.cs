@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 	public GameObject	camera;
 	public GameObject	cameraTPS;
 	public GameObject	cameraFPS;
+	public GameObject	ending;
 
 	void Start() {
 		Pov = 0;
@@ -52,5 +53,16 @@ public class GameManager : MonoBehaviour
 
 	public int getPov() {
 		return (Pov);
+	}
+
+	public void gameOver(int end) {
+		Destroy(player.GetComponent<player>());
+		if (end == 0) {
+			ending.GetComponent<Animator>().SetTrigger("endGood");
+			ending.transform.GetChild(1).gameObject.SetActive(true);
+		} else if (end == 1) {
+			ending.GetComponent<Animator>().SetTrigger("endGood");
+			ending.transform.GetChild(0).gameObject.SetActive(true);
+		}
 	}
 }
