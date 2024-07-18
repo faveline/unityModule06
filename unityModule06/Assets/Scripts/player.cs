@@ -11,7 +11,6 @@ public class player : MonoBehaviour
 	private bool		doorBool;
 	private GameObject	door;
 	private bool		doorToOpen;
-	private GameObject	cpy;
 	private bool		keyBool;
 	private GameObject	key;
 	private int			nbrKey;
@@ -19,7 +18,6 @@ public class player : MonoBehaviour
     void Start()
     {
 		nbrKey = 0;
-		cpy = null;
 		doorToOpen = true;
 		timeLast = 0f;
 		rota = new Vector3(0, speedRota, 0);
@@ -44,7 +42,6 @@ public class player : MonoBehaviour
 		}
 		if (Input.GetKeyDown(KeyCode.F)) {
 			if (doorBool) {
-				Debug.Log(nbrKey);
 				if (door.gameObject.tag != "lastDoor" || nbrKey == 3)
 					door.GetComponent<Animator>().SetTrigger("openDoor");
 			}
