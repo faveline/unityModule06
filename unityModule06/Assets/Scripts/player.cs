@@ -30,10 +30,20 @@ public class player : MonoBehaviour
 			return;
 		timeLast = Time.time + Time.deltaTime;
 		if (Input.GetKey(KeyCode.W)) {
-			anim.SetBool("move", true);
+			anim.SetInteger("move", 1);
+		} else if (Input.GetKey(KeyCode.S)) {
+			anim.SetInteger("move", -1);
 		} else {
-			anim.SetBool("move", false);
+			anim.SetInteger("move", 0);
 		}
+		// if (GameManager.Instance.getPov() == 2) {
+		// 	if (Input.mousePosition.x < Screen.width * 0.35) {
+		// 		transform.rotation = Quaternion.Euler(transform.eulerAngles - rota / 2 * Time.deltaTime);
+		// 	}
+		// 	if (Input.mousePosition.x > Screen.width * 0.65) {
+		// 		transform.rotation = Quaternion.Euler(transform.eulerAngles + rota / 2 * Time.deltaTime);
+		// 	}
+		// }
 		if (Input.GetKey(KeyCode.A)) {
 			transform.rotation = Quaternion.Euler(transform.eulerAngles - rota * Time.deltaTime);
 		}
@@ -66,6 +76,9 @@ public class player : MonoBehaviour
 		if (other.gameObject.layer == 10) {
 			GameManager.Instance.gameOver(1);
 		}
+		if (other.gameObject.layer == 13) {
+			GameManager.Instance.gameOver(0);
+		}		
 	}
 
 	private void OnTriggerExit(Collider other) {

@@ -7,6 +7,11 @@ TagManager:
   - wall
   - door
   - lastDoor
+  - player
+  - camera
+  - cameratps
+  - camerafps
+  - ending
   layers:
   - Default
   - TransparentFX

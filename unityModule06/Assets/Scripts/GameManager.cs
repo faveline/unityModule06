@@ -32,6 +32,15 @@ public class GameManager : MonoBehaviour
 		Pov = 0;
 	}
 
+	void OnLevelWasLoaded() {
+		Pov = 0;
+		player = GameObject.FindGameObjectsWithTag("player")[0];
+		camera = GameObject.FindGameObjectsWithTag("MainCamera")[0];
+		cameraTPS = GameObject.FindGameObjectsWithTag("cameratps")[0];
+		cameraFPS = GameObject.FindGameObjectsWithTag("camerafps")[0];
+		ending = GameObject.FindGameObjectsWithTag("ending")[0];
+	}
+
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.P)) {
 			if (Pov == 0) {
