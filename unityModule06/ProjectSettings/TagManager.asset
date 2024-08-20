@@ -27,8 +27,8 @@ TagManager:
   - wallDoor
   - player
   - ennemy
-  - 
-  - 
+  - gargoyle
+  - PostProcessing
   - 
   - 
   - 

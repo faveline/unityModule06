@@ -5,6 +5,7 @@ using UnityEngine;
 public class player : MonoBehaviour
 {
 	public float		speedRota;
+	public GameObject	ghosts;
 	private float		timeLast;
 	private Vector3		rota;
 	private Animator	anim;
@@ -36,19 +37,15 @@ public class player : MonoBehaviour
 		} else {
 			anim.SetInteger("move", 0);
 		}
-		// if (GameManager.Instance.getPov() == 2) {
-		// 	if (Input.mousePosition.x < Screen.width * 0.35) {
-		// 		transform.rotation = Quaternion.Euler(transform.eulerAngles - rota / 2 * Time.deltaTime);
-		// 	}
-		// 	if (Input.mousePosition.x > Screen.width * 0.65) {
-		// 		transform.rotation = Quaternion.Euler(transform.eulerAngles + rota / 2 * Time.deltaTime);
-		// 	}
-		// }
-		if (Input.GetKey(KeyCode.A)) {
-			transform.rotation = Quaternion.Euler(transform.eulerAngles - rota * Time.deltaTime);
-		}
-		if (Input.GetKey(KeyCode.D)) {
-			transform.rotation = Quaternion.Euler(transform.eulerAngles + rota * Time.deltaTime);	
+		if (GameManager.Instance.getPov() == 2) {
+			transform.rotation = Quaternion.Euler(transform.eulerAngles - rota * Time.deltaTime * (1 - 2 * Input.mousePosition.x / Screen.width));
+		} else {
+			if (Input.GetKey(KeyCode.A)) {
+				transform.rotation = Quaternion.Euler(transform.eulerAngles - rota * Time.deltaTime);
+			}
+			if (Input.GetKey(KeyCode.D)) {
+				transform.rotation = Quaternion.Euler(transform.eulerAngles + rota * Time.deltaTime);	
+			}
 		}
 		if (Input.GetKeyDown(KeyCode.F)) {
 			if (doorBool) {
@@ -73,12 +70,17 @@ public class player : MonoBehaviour
 			keyBool = true;
 			key = other.gameObject;
 		}
+		if (other.gameObject.layer == 14) {
+			for (int i = 0; i < ghosts.transform.childCount; i++) {
+				ghosts.transform.GetChild(i).GetComponent<ghost>().moveTowardPlayer();
+			}
+		}
 		if (other.gameObject.layer == 10) {
 			GameManager.Instance.gameOver(1);
 		}
 		if (other.gameObject.layer == 13) {
 			GameManager.Instance.gameOver(0);
-		}		
+		}	
 	}
 
 	private void OnTriggerExit(Collider other) {

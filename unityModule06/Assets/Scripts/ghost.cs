@@ -46,12 +46,16 @@ public class ghost : MonoBehaviour
 
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.layer == 12) {
-			destination = player.transform.position;
-			agent.destination = destination;
-			follow = true;
-			timer = Time.time + timerMax;
-			cpyPos = transform.position;
+			moveTowardPlayer();
 		}
+	}
+
+	public void moveTowardPlayer() {
+		destination = player.transform.position;
+		agent.destination = destination;
+		follow = true;
+		timer = Time.time + timerMax;
+		cpyPos = transform.position;
 	}
 
 	private Vector3	randomDestination() {
